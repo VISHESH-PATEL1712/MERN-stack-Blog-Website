@@ -8,12 +8,14 @@ import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom
 import Login from './components/Accounts/Login';
 import Home from './components/home/Home';
 import Header from './components/header/Header';
+import CreatePost from './components/create/CreatePost';
 
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
  
    return isAuthenticated ? 
     <>
+      <Header />
       <Outlet />
     </>
     : <Navigate replace to='/login' />
@@ -29,13 +31,17 @@ function App() {
     
       <DataProvider>
         <BrowserRouter>
-         <Header />
+        
           <div style={{ marginTop: 100}}>
             <Routes>
                 <Route path='/login' element={<Login isUserAuthenticated={isUserAuthenticated } />} />
 
                 <Route path='/' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
-                <Route path='/' element={<Home />} />
+                     <Route path='/' element={<Home />} />
+                </Route>
+
+                <Route path='/create' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+                     <Route path='/create' element={<CreatePost />} />
                 </Route>
             </Routes>
           </div>
